@@ -1,59 +1,55 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import './Counter.css';
 
 export default function Counter() {
-  const [count, setCount] = useState(0);
-  const navigate = useNavigate();
+
+  const [count, setCount] = useState(() => {
+    // Load saved count from localStorage
+    const saved = localStorage.getItem('counter');
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
+  const [nightMode, setNightMode] = useState(() => {
+    const saved = localStorage.getItem('nightMode');
+    return saved === 'true';
+  });
 
   const handleClickAnywhere = () => {
     setCount(prev => prev + 1);
   };
 
   const resetCounter = (e) => {
-    e.stopPropagation(); // Prevent reset button click from incrementing
+    e.stopPropagation();
     setCount(0);
   };
 
-  const styles = {
-    container: {
-      position: 'relative',
-      height: '100vh',
-      width: '100vw',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#dcdcdc',
-      cursor: 'pointer',
-      overflow: 'hidden'
-    },
-    counterText: {
-      fontSize: '64px',
-      marginBottom: '20px'
-    },
-    resetButton: {
-      position: 'absolute',
-      bottom: '80px',
-      padding: '10px 20px',
-      fontSize: '16px',
-      cursor: 'pointer'
-    },
-    button: {
-      position: 'absolute',
-      bottom: '20px',
-      padding: '10px 20px',
-      fontSize: '16px',
-      cursor: 'pointer'
-    }
+  const toggleNightMode = (e) => {
+    e.stopPropagation();
+    setNightMode(prev => !prev);
   };
 
+  // Save count to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('counter', count.toString());
+  }, [count]);
+
+  // Save nightMode preference
+  useEffect(() => {
+    localStorage.setItem('nightMode', nightMode.toString());
+  }, [nightMode]);
+
   return (
-    <div style={styles.container} onClick={handleClickAnywhere}>
-      <h1 style={styles.counterText}> {count}</h1>
-      <button onClick={resetCounter} style={styles.resetButton}>Reset</button>
-      <button onClick={(e) => { e.stopPropagation(); navigate('/'); }} style={styles.button}>
-        Home
-      </button>
+    <div
+      className={`container ${nightMode ? 'night' : ''}`}
+      onClick={handleClickAnywhere}
+    >
+      <div className="topButtons">
+        <button className="resetButton" onClick={resetCounter}>Reset</button>
+        <button className="homeButton" onClick={toggleNightMode}>
+          {nightMode ? 'Day Mode' : 'Night Mode'}
+        </button>
+      </div>
+      <h1 className="counterText">{count}</h1>
     </div>
   );
 }

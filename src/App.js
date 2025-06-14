@@ -1,9 +1,7 @@
 
 import './App.css';
-import { useNavigate } from 'react-router-dom'; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Counter from './Counter';
-import Dict from './Dict';
 const styles = {
  
   button: {
@@ -15,7 +13,6 @@ const styles = {
 };
 
 function Home() {
-  const navigate = useNavigate();
 
   return (
     <div style={styles.container}>
