@@ -48,7 +48,7 @@ html, body {
 .resetButton,
 .homeButton {
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 60px;
   cursor: pointer;
   background: none;
   border: 1px solid #ccc;
