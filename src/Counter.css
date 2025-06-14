@@ -67,11 +67,14 @@ html, body {
   box-shadow: none;
   background-color: transparent;
 }
-
 .counterText {
-  font-size: 64px;
-  margin-top: 60px; /* Give space for top buttons */
+  font-size: 150pt; /* extra large */
+  font-weight: bold;
+  margin-top: 80px; /* adjust if needed */
+  text-align: center;
+  color: inherit;
 }
+
 /* NIGHT MODE STYLES */
 .night {
   background-color: #121212;
